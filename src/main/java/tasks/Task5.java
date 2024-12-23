@@ -13,8 +13,7 @@ import java.util.Map;
 Есть список персон, и словарь сопоставляющий id каждой персоны и id региона
 Необходимо выдать список персон ApiPersonDto, с правильно проставленными areaId
 Конвертер одной персоны дополнен!
- */
-public class Task5 {
+ */public class Task5 {
 
   private final PersonConverter personConverter;
 
@@ -23,6 +22,14 @@ public class Task5 {
   }
 
   public List<ApiPersonDto> convert(List<Person> persons, Map<Integer, Integer> personAreaIds) {
-    return new ArrayList<>();
+    List<ApiPersonDto> personDto = new ArrayList<>();
+    for (Person person : persons) {
+      personDto.add(personConverter.convert(person));
+    }
+    for (ApiPersonDto person : personDto) {
+      person.setAreaId(personAreaIds.get(Integer.parseInt(person.getId())));
+    }
+
+    return personDto;
   }
 }
